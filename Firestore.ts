@@ -1,9 +1,11 @@
 import { firestore } from "firebase-admin";
 import { IDictionary, DataConnector } from './DataConnector';
 
-export default class FirestoreConnector<T> extends DataConnector<T> {
-	static _firestore = firestore();
+let _store: firestore.Firestore | null;
 
+export const setupFirestore = (app: firestore.Firestore) => _store = app;
+
+export default class FirestoreConnector<T> extends DataConnector<T> {
 	protected _rootPath: FirebaseFirestore.DocumentReference | FirebaseFirestore.Firestore;
 	protected _converter: FirebaseFirestore.FirestoreDataConverter<T>;
 	protected _pool_id: string;
@@ -24,7 +26,7 @@ export default class FirestoreConnector<T> extends DataConnector<T> {
 
 		if (tokens.length % 2) throw 'FirestoreConnect root must be Document !!!';
 
-		this._rootPath = FirestoreConnector._firestore;
+		this._rootPath = _store;
 		for (let i = 0; i < tokens.length; i += 2) {
 			this._rootPath = this._rootPath.collection(tokens[i]).doc(tokens[i + 1]);
 		}
