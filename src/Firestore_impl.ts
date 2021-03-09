@@ -1,11 +1,11 @@
 import { firestore } from "firebase-admin";
 import { IDictionary, DataConnector } from './DataConnector';
 
-let _store: firestore.Firestore | null;
+let _store: firestore.Firestore;
 
 export const setupFirestore = (app: firestore.Firestore) => _store = app;
 
-export default class FirestoreConnector<T> extends DataConnector<T> {
+export class FirestoreConnector<T> extends DataConnector<T> {
 	protected _rootPath: FirebaseFirestore.DocumentReference | FirebaseFirestore.Firestore;
 	protected _converter: FirebaseFirestore.FirestoreDataConverter<T>;
 	protected _pool_id: string;
@@ -59,6 +59,7 @@ export default class FirestoreConnector<T> extends DataConnector<T> {
 	async _addObject (pool: string, obj: T, check = true) {
 		//const base: any = obj
 		const doc = await this._rootPath.collection(pool).withConverter(this._converter).add(obj);
+		if (check) console.log(`check = ${check}`);
 		return (await doc.get()).data()
 		//base.id = doc.id;
 		//return doc;

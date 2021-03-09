@@ -5,13 +5,13 @@ export interface IDictionary<TValue> {
 export abstract class DataConnector<T> {
 	abstract set rootPath (path: string);
 
-	abstract Load(id: string) : Promise<T>;
+	abstract Load(id: string) : Promise<T> | null;
 
 	abstract Save(obj: T, force: boolean) : Promise<boolean>;
 
 	//abstract Add(obj: T, check: boolean) : Promise<T>;
 	
-	abstract Query(key: string, start: number, limit: number) : Promise<T[]>;
+	abstract Query(key: string, start: number, limit: number) : Promise<T[]> | null;
 
-	abstract FilterByKey(key: string, value: string) : Promise<T[]>;
+	abstract FilterByKey(key: string, value: string) : Promise<T[]> | null;
 }

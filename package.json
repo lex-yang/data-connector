@@ -2,12 +2,20 @@
   "name": "@yanglex/data-connector",
   "version": "1.0.0",
   "description": "Data Tier Connector of WaDA Framework.",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "module": "dist/index.modern.js",
+  "source": "src/index.ts",
   "author": "Lex Yang",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "build": "microbundle-crl --no-compress --format modern,cjs"
+  },
   "devDependencies": {
+    "@types/node-fetch": "^2.5.8",
     "firebase-admin": "^9.5.0",
+    "microbundle-crl": "^0.13.11",
+    "node-fetch": "^2.6.1",
     "redis": "^3.0.2",
     "ts-node": "^9.1.1",
     "tslint": "^6.1.3",
